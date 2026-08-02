@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Profiles{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="glow"></div>
+
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="brand-mark">P</span>
+      <span>Profiles</span>
+    </a>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('new') }}">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      New profile
+    </a>
+  </header>
+
+  <main class="wrap">
+    {% block body %}{% endblock %}
+  </main>
+
+  <footer class="foot">Built with Flask</footer>
+</body>
+</html>

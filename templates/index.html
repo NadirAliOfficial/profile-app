@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>People</h1>
+<p class="sub">{{ profiles|length }} profile{{ '' if profiles|length == 1 else 's' }} so far.</p>
+
+{% if profiles %}
+<div class="list">
+  {% for p in profiles %}
+  <a class="card" href="{{ url_for('profile', pid=p['id']) }}">
+    {% if p['image'] %}
+      <img class="avatar" src="{{ url_for('static', filename='uploads/' ~ p['image']) }}" alt="">
+    {% else %}
+      <div class="avatar avatar-fallback">{{ p['name'][0]|upper }}</div>
+    {% endif %}
+    <div>
+      <div class="card-name">{{ p['name'] }}</div>
+      {% if p['about'] %}<div class="card-about">{{ p['about'] }}</div>{% endif %}
+    </div>
+    <span class="chev"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  <p>No profiles yet — add the first one.</p>
+  <a class="btn btn-primary" href="{{ url_for('new') }}">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    Create profile
+  </a>
+</div>
+{% endif %}
+{% endblock %}

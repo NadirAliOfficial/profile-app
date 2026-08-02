@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit profile' if profile else 'New profile' }}{% endblock %}
+{% block body %}
+<a class="back" href="{{ url_for('index') }}">
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+  All profiles
+</a>
+<h1>{{ 'Edit profile' if profile else 'Create profile' }}</h1>
+<p class="sub">Add a name, a photo and a short bio.</p>
+
+<form class="panel" method="post" enctype="multipart/form-data">
+  {% if error %}
+  <div class="alert">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+    {{ error }}
+  </div>
+  {% endif %}
+
+  <div class="field">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" placeholder="Jane Doe"
+           value="{{ profile['name'] if profile else '' }}" required autofocus>
+  </div>
+
+  <div class="field">
+    <label for="about">About</label>
+    <textarea id="about" name="about" placeholder="A few lines about this person…">{{ profile['about'] if profile else '' }}</textarea>
+  </div>
+
+  <div class="field">
+    <label for="image">Photo</label>
+    <input type="file" id="image" name="image" accept="image/*">
+    <div class="hint">PNG, JPG, GIF or WEBP · up to 4 MB{{ ' · leave empty to keep the current photo' if profile else '' }}</div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" type="submit">
+      <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      {{ 'Save changes' if profile else 'Create profile' }}
+    </button>
+    <a class="btn btn-ghost" href="{{ url_for('profile', pid=profile['id']) if profile else url_for('index') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

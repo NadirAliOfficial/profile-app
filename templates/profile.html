@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ p['name'] }}{% endblock %}
+{% block body %}
+<a class="back" href="{{ url_for('index') }}">
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+  All profiles
+</a>
+
+<div class="panel" style="margin-top:14px">
+  <div class="hero">
+    {% if p['image'] %}
+      <img class="avatar avatar-xl" src="{{ url_for('static', filename='uploads/' ~ p['image']) }}" alt="{{ p['name'] }}">
+    {% else %}
+      <div class="avatar avatar-xl avatar-fallback">{{ p['name'][0]|upper }}</div>
+    {% endif %}
+    <div>
+      <h1>{{ p['name'] }}</h1>
+      <p class="muted" style="margin:0;font-size:14px">Profile #{{ p['id'] }}</p>
+    </div>
+  </div>
+
+  <p class="detail-about {{ 'is-empty' if not p['about'] }}">{{ p['about'] or 'No description yet.' }}</p>
+
+  <div class="actions">
+    <a class="btn" href="{{ url_for('edit', pid=p['id']) }}">
+      <svg viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
+      Edit
+    </a>
+    <form class="spacer" method="post" action="{{ url_for('delete', pid=p['id']) }}">
+      <button class="btn btn-danger" type="submit">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>
+        Delete
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
